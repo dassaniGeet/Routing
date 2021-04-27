@@ -3,6 +3,8 @@
 #include <assert.h>
 #include "graph.h"
 
+/*----------- init_graph for intialising a graph---------*/
+
 Graph init_graph(Graph G,int n){
     for(int i=0;i<n;i++){
         G->pnext[i]->elem=i;
@@ -12,6 +14,7 @@ Graph init_graph(Graph G,int n){
     return G;
 }
 
+/*----------- add_vertex for adding a vertex in a graph---------*/
 void add_vertex(Graph G,vertex source,vertex dest,int edge_len){
     pointer ptr=(pointer)malloc(sizeof(struct Node));
     ptr->elem=dest;
@@ -39,6 +42,8 @@ void add_vertex(Graph G,vertex source,vertex dest,int edge_len){
     // return G;
 }
 
+
+/*----------- search_node for searching a vertex in a graph---------*/
 int search_node(Graph G,vertex a){
     if(G->pnext[a]->next==NULL)
         return 0;
@@ -46,6 +51,8 @@ int search_node(Graph G,vertex a){
     return 1;   
 }
 
+
+/*----------- Print_Graph for printing a vertex in a graph---------*/
 void Print_Graph(Graph G,int n){
     if(G==NULL){
         printf("NULL\n");
@@ -63,39 +70,119 @@ void Print_Graph(Graph G,int n){
     }
 }
 
-int main(){
 
-    int n;
-    printf("Enter no. of nodes:\n");
-    scanf("%d",&n);
+/*----------- choose_min for searching min_distance vertex from a source in a graph--------*/
 
-    Graph G;
-    G=(Graph)malloc(sizeof(struct graph));
-    assert(G!=NULL);
-    G->num_of_nodes=n;
-    
-    for(int i=0; i<n; i++){
-        G->pnext[i]=(pointer)malloc(sizeof(struct Node));
+vertex choose_min(int* min_distance,int* visited, Graph G)
+{
+    int min = INF,n = G->num_of_nodes,min_node=-1;
+
+    for (int i = 0; i < n; ++i)
+    {
+        if(min_distance[i]<min && !visited[i])
+        {
+            min = min_distance[i];
+            min_node = i;
+
+        }
     }
 
-    G=init_graph(G,n);
+    return min_node;
+}
 
-    add_vertex(G,0,3,2);
-    add_vertex(G,0,5,3);
-    add_vertex(G,1,4,4);
-    add_vertex(G,2,3,5);
 
-    Print_Graph(G,n);
+/*----------- Dijkstra for finding the shortest paths between nodes in a graph-------------*/
 
-    printf("\nEnter vertex to be searched:\n");
-    int a;
-    scanf("%d",&a);
+void Dijkstra(Graph G, vertex source, vertex destination)
+{
+    
+    if(source<0||source>(G->num_of_nodes)-1)
+        return;
 
-    int flag=search_node(G,a);
-    if(flag==0)
-        printf("Not Found\n");
-    else
-        printf("Found\n");
+    int *visited =(int*)malloc(sizeof(int)* (G->num_of_nodes));
+    int *min_distance = (int*)malloc(sizeof(int)* (G->num_of_nodes));
+    int *prev = (int*)malloc(sizeof(int)* (G->num_of_nodes));
 
-    return 0;
+    //intialise:
+     for(int i=0;i<G->num_of_nodes;i++){
+        visited[i] = 0;
+        min_distance[i] = INF;
+        prev[i] = -1;
+    }
+
+    // source node:
+    visited[source] = 1;
+    min_distance[source] = 0;
+    prev[source] = -1;
+    Node *p = G->pnext[source];
+    while(p!=NULL) {
+       min_distance[p->elem] = p->edge_len;
+       if(p->elem!=source && min_distance[p->elem ]<INF)
+        prev[p->elem] = source;
+       p = p->next;
+    }
+
+      for(int i=1;i<G->num_of_nodes;i++){
+        int k = choose_min(min_distance,visited,G);
+
+        if(k==-1) continue;
+        
+        visited[k] = 1;
+
+        Node *p = G->pnext[k];
+        while(p!=NULL) {
+
+        if(min_distance[p->elem] > min_distance[k] + p->edge_len && !visited[p->elem])
+        {
+            min_distance[p->elem] = min_distance[k] + p->edge_len;
+            prev[p->elem] = k;    
+        }
+        p = p->next;
+    }
+
+  }
+
+prev[source] = -1;
+
+ //printf final path
+  printf("source: %d\n", source);
+  printf("destination: %d\n", destination);
+  printf("min distance: %d\n", min_distance[destination]);
+  printf("path: \n");
+
+  
+  /*
+
+  //debug
+  for (int i = 0; i < G->num_of_nodes; ++i)
+  {
+     printf("%d , ", min_distance[i]);
+  }
+
+  printf("\n");
+
+  for (int i = 0; i < G->num_of_nodes; ++i)
+  {
+     printf("%d , ", prev[i]);
+  }
+
+  printf("\n");
+  
+*/
+
+  if(prev[destination]==-1)
+  {
+    //printf("%d\n", source);
+    printf("No path\n");
+    return;
+  }
+
+  while(prev[destination]!=-1)
+  {
+    printf("%d <===== ", destination);
+    destination = prev[destination];
+  }
+
+  printf("%d\n", source);
+  return;
 }
