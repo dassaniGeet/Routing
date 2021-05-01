@@ -20,10 +20,20 @@ int main(){
 
     G=init_graph(G,n);
 
-    add_vertex(G,0,3,2);
-    add_vertex(G,0,5,3);
-    add_vertex(G,1,4,4);
-    add_vertex(G,2,3,5);
+    add_vertex(G,0,1,10); 
+    add_vertex(G,0,4,5);  
+    add_vertex(G,1,2,1);
+    add_vertex(G,3,2,6);
+    add_vertex(G,2,3,4);
+    add_vertex(G,1,4,2);
+    add_vertex(G,4,1,3);
+    add_vertex(G,4,2,9);
+    add_vertex(G,4,3,2);
+    add_vertex(G,3,0,7);
+
+
+
+
 
     Print_Graph(G,n);
 
