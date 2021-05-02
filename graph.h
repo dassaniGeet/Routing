@@ -11,7 +11,10 @@ typedef int vertex;
 
 struct Node{
     int elem;
-    int edge_len;
+    double edge_len;
+    // int we_edge;
+    double con;
+    double time;
     struct Node* next;
 };
 
@@ -30,7 +33,7 @@ typedef struct PriorityQ* PriorityQPtr;
 typedef struct PriorityQNode
 {
     vertex v;
-    int edge_len;
+    double time;
 
 } PriorityQNode;
  
@@ -50,7 +53,7 @@ Graph init_graph(Graph G,int n);
 void Print_Graph(Graph G,int n);
 
 /*----------- add_vertex for adding a vertex in a graph-----------------------------------*/
-void add_vertex(Graph G,vertex source,vertex dest,int edge_len);
+void add_vertex(Graph G,vertex source,vertex dest,double edge_len,int traffic);
 
 /*----------- search_node for searching a vertex in a graph-------------------------------*/
 int search_node(Graph G,vertex a);
@@ -58,7 +61,7 @@ int search_node(Graph G,vertex a);
 /*----------- priorityQ functions---------------------------------------------------------*/
 
 //make new PriorityQNode
-PriorityQNodePtr newPriorityQNode(vertex v, int distance);
+PriorityQNodePtr newPriorityQNode(vertex v, double time);
 
 // create a PriorityQ
 PriorityQPtr createPriorityQ(int size);
@@ -73,7 +76,7 @@ void heapify(vertex parent_ind, PriorityQPtr PQ);
 PriorityQNodePtr extractMin(PriorityQPtr PQ);
 
 //decreases edge_len value of a given vertex v in PriorityQ. 
-void decreaseKey(PriorityQPtr PQ,vertex v, int distance);
+void decreaseKey(PriorityQPtr PQ,vertex v, double time);
 
 /*----------- choose_min for searching min_distance vertex from a source in a graph--------*/
 vertex choose_min(PriorityQPtr PriorityQ,int* visited, Graph G);

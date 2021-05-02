@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <assert.h>
 #include <stdbool.h>
+#include <math.h>
+#include <time.h>
 #include "graph.h"
 
 /*----------- init_graph for intialising a graph---------*/
@@ -10,16 +12,41 @@ Graph init_graph(Graph G,int n){
     for(int i=0;i<n;i++){
         G->pnext[i]->elem=i;
         G->pnext[i]->edge_len=0;
+        // G->pnext[i]->we_edge=0;
+        G->pnext[i]->con=0;
         G->pnext[i]->next=NULL;
     }
     return G;
 }
 
 /*----------- add_vertex for adding a vertex in a graph---------*/
-void add_vertex(Graph G,vertex source,vertex dest,int edge_len){
+void add_vertex(Graph G,vertex source,vertex dest,double edge_len,int traffic){
     pointer ptr=(pointer)malloc(sizeof(struct Node));
     ptr->elem=dest;
     ptr->edge_len=edge_len;
+
+    // ptr->we_edge=edge_len*traffic;
+    ptr->con=traffic/edge_len;
+    double temp=traffic/edge_len;
+
+    if(temp<=50){
+        double v=80;
+        ptr->time=edge_len/v;   
+    }
+    else if(temp<=250){
+        double v=50;
+        ptr->time=edge_len/v;
+    }
+    else if(temp<=500){
+        double v=30;
+        ptr->time=edge_len/v;
+    }
+    else{
+        double v=0;
+        ptr->time=INF;
+    }
+
+
     ptr->next=NULL;
 
     pointer p=G->pnext[source];
@@ -28,17 +55,6 @@ void add_vertex(Graph G,vertex source,vertex dest,int edge_len){
         p=p->next;
     }
     p->next=ptr;
-
-    // pointer ptr2=(pointer)malloc(sizeof(struct Node));
-    // ptr2->elem=source;
-    // ptr2->edge_len=edge_len;
-    // ptr2->next=NULL;
-
-    // pointer p2=G->pnext[dest];
-    // while(p2->next!=NULL){
-    //     p2=p2->next;
-    // }
-    // p2->next=ptr2;
 
 }
 
@@ -62,11 +78,11 @@ void Print_Graph(Graph G,int n){
     for(int i=0 ; i<G->num_of_nodes ; i++){
         pointer p=G->pnext[i];
         while(p->next!=NULL){
-            printf("%d(Edge len between %d and %d is %d)\t",p->elem,i,p->elem,p->edge_len);
+            printf("%d(Edge len between %d and %d is %g)\t",p->elem,i,p->elem,p->edge_len);
 
             p=p->next;
         }
-        printf("%d(Edge len between %d and %d is %d)\n",p->elem,i,p->elem,p->edge_len);
+        printf("%d(Edge len between %d and %d is %g)\n",p->elem,i,p->elem,p->edge_len);
     }
 }
 
@@ -76,11 +92,11 @@ void Print_Graph(Graph G,int n){
 int *pos; 
 
 //make new PriorityQNode
-PriorityQNodePtr newPriorityQNode(vertex v, int distance)
+PriorityQNodePtr newPriorityQNode(vertex v, double time)
 {
     PriorityQNodePtr PQNode = (PriorityQNodePtr) malloc(sizeof(PriorityQNode));
     PQNode->v = v;
-    PQNode->edge_len = distance;
+    PQNode->time = time;
     return PQNode;
 }
  
@@ -112,11 +128,11 @@ void heapify(vertex parent_ind, PriorityQPtr PQ)
     smallest_ind = parent_ind;
 
     left_child_ind = 2 * parent_ind + 1;
-    if (left_child_ind < PQ->size && PQ->priorityQ_arr[left_child_ind]->edge_len <  PQ->priorityQ_arr[smallest_ind]->edge_len)
+    if (left_child_ind < PQ->size && PQ->priorityQ_arr[left_child_ind]->time <  PQ->priorityQ_arr[smallest_ind]->time)
       smallest_ind = left_child_ind;
 
     right_child_ind= 2 * parent_ind + 2;
-    if (right_child_ind < PQ->size && PQ->priorityQ_arr[right_child_ind]->edge_len <  PQ->priorityQ_arr[smallest_ind]->edge_len)
+    if (right_child_ind < PQ->size && PQ->priorityQ_arr[right_child_ind]->time <  PQ->priorityQ_arr[smallest_ind]->time)
        smallest_ind = right_child_ind;
  
     // Swap and continue heapifying if root is not smallest
@@ -152,16 +168,16 @@ PriorityQNodePtr extractMin(PriorityQPtr PQ)
 }
  
 //decreases edge_len value of a given vertex v in PriorityQ. 
-void decreaseKey(PriorityQPtr PQ,vertex v, int distance)
+void decreaseKey(PriorityQPtr PQ,vertex v, double time)
 {
     //Get the index of v in PriorityQ array. This function uses pos[] of min heap to get the current index of node in min heap.
     int i = pos[v];
  
     //Get the node and update its edge_len value
-    PQ->priorityQ_arr[i]->edge_len = distance;
+    PQ->priorityQ_arr[i]->time = time;
 
     //while PriorityQ is not hepified
-    while (PQ->priorityQ_arr[i]->edge_len < PQ->priorityQ_arr[(i - 1) / 2]-> edge_len)
+    while (PQ->priorityQ_arr[i]->time < PQ->priorityQ_arr[(i - 1) / 2]-> time)
     {
         // Swap this node with its parent
         int parent_ind = (i-1)/2;
@@ -206,7 +222,8 @@ void Dijkstra(Graph G, vertex source, vertex destination)
     */
 
     int *visited =(int*)malloc(sizeof(int)* (G->num_of_nodes));
-    int *min_distance = (int*)malloc(sizeof(int)* (G->num_of_nodes));
+    double *min_distance = (double*)malloc(sizeof(double)* (G->num_of_nodes));
+    double *min_time = (double*)malloc(sizeof(double)* (G->num_of_nodes));
     int *prev = (int*)malloc(sizeof(int)* (G->num_of_nodes));
     struct PriorityQ* PQ = createPriorityQ(G->num_of_nodes);
     pos = (int *)malloc((G->num_of_nodes )* sizeof(int));
@@ -222,7 +239,8 @@ void Dijkstra(Graph G, vertex source, vertex destination)
      for(int i=0;i<G->num_of_nodes;i++){
         visited[i] = 0;
         min_distance[i] = INF;
-        PQ->priorityQ_arr[i] = newPriorityQNode(i,min_distance[i]);
+        min_time[i] = INF;
+        PQ->priorityQ_arr[i] = newPriorityQNode(i,min_time[i]);
         pos[i] = i;
         prev[i] = -1;
     }
@@ -234,15 +252,17 @@ void Dijkstra(Graph G, vertex source, vertex destination)
     */
 
     min_distance[source] = 0;
-    decreaseKey(PQ, source, min_distance[source]);
+    min_time[source] = 0;
+    decreaseKey(PQ, source, min_time[source]);
     visited[source] = 1;
-    min_distance[source] = 0;
     prev[source] = -1;
+
     Node *p = G->pnext[source];
     while(p!=NULL) {
        min_distance[p->elem] = p->edge_len;
-       decreaseKey(PQ, p->elem, min_distance[p->elem]); 
-       if(p->elem!=source && min_distance[p->elem ]<INF)
+       min_time[p->elem] = p->time;
+       decreaseKey(PQ, p->elem, min_time[p->elem]); 
+       if(p->elem!=source && min_time[p->elem ]<INF)
           prev[p->elem] = source;
 
        p = p->next;
@@ -269,12 +289,13 @@ void Dijkstra(Graph G, vertex source, vertex destination)
         Node *p = G->pnext[k];
         while(p!=NULL) {
 
-        if(min_distance[p->elem] > min_distance[k] + p->edge_len && !visited[p->elem])
+        if(min_time[p->elem] > min_time[k] + p->time && !visited[p->elem])
         {
             //printf("min_distance: %d\n", min_distance[k]);
             min_distance[p->elem] = min_distance[k] + p->edge_len;
+            min_time[p->elem] = min_time[k] + p->time;
             prev[p->elem] = k; 
-            decreaseKey(PQ, p->elem, min_distance[p->elem]);   
+            decreaseKey(PQ, p->elem, min_time[p->elem]);   
         }
         p = p->next;
     }
@@ -284,30 +305,61 @@ void Dijkstra(Graph G, vertex source, vertex destination)
  prev[source] = -1;
 
  //print final path:
-  printf("Source: %d\n", source);
-  printf("Destination: %d\n", destination);
-  printf("Min Distance: %d\n", min_distance[destination]);
-  printf("Path: \n");
+//   printf("Source: %d\n", source);
+//   printf("Destination: %d\n", destination);
 
- /*
-
-  //debug
+  double t=min_time[destination];
+  int hrs=(int)floor(t);
+  int min=(t-hrs)*60;
   
-  for (int i = 0; i < G->num_of_nodes; ++i)
-  {
-     printf("%d , ", min_distance[i]);
+
+  time_t now;
+  time(&now);
+
+  struct tm *local = localtime(&now);
+ 
+    int hours = local->tm_hour;         // get hours since midnight (0-23)
+    int minutes = local->tm_min;
+    int day = local->tm_mday;            // get day of month (1 to 31)
+    int month = local->tm_mon;   // get month of year (0 to 11)
+    int year = local->tm_year;        // get minutes passed after the hour (0-59)
+
+
+  printf("\nCity\n\n");
+
+  printf("Source: %d\n\n",source);
+
+  printf("Destination:%d\n\n",destination);
+
+  printf("\n\n");
+
+   printf("/*-----------  <==       ...............   ==>  ------------*/\n\n");
+
+    printf("Approximate Distance(kms): %g\n\n", min_distance[destination]);
+    printf("Approximate Minimum Time: %dhrs %dmins\n", hrs,min);
+
+    printf("\n\n\n");
+   printf("/*-----------  <==       ...............   ==>  ------------*/\n\n");
+
+  printf("Current Time: %s\n", ctime(&now));
+
+//   printf("Approximate Arrival Time: %dhrs %dmins\n", hrs,min);
+
+  minutes=minutes+min;
+  hours=hours+hrs;
+
+  if(minutes>=60){
+      hours++;
+      minutes=minutes-60;
+  }
+  if(hours>=24){
+      hours=hours-24;
   }
 
-  printf("\n");
+  printf("Approximate Arrival Time:: %d:%d\n\n",hours,minutes);
 
-  for (int i = 0; i < G->num_of_nodes; ++i)
-  {
-     printf("%d , ", prev[i]);
-  }
+  printf("Map Path: \n");
 
-  printf("\n");
-
-*/
 
   if(prev[destination]==-1)
   {
@@ -325,3 +377,4 @@ void Dijkstra(Graph G, vertex source, vertex destination)
   printf("%d\n", source);
   return;
 }
+
