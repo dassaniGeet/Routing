@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 #include "conio.h"
 #include "graph.h"
 
@@ -18,10 +19,16 @@ int main()
 
     printf("WELCOME!\nExplore the World With Us!\n\n\n");
 
-    int x;
+    int city;
+    printf("\nEnter the city you want to start your exploration: \n");
+    scanf("%d", &city);
+
+starting:
+
     printf("                     Press:                  \n");
     printf("                    1. Admin                   \n");
     printf("                    2. User                   \n");
+    int x;
     scanf("%d", &x);
 
     if (x != 1 && x != 2)
@@ -37,10 +44,6 @@ int main()
     printf("/*-----------  <==       ...............     ==>  ------------*/\n\n\n");
 
     printf("WELCOME!\nExplore the World With Us!\n\n\n");
-
-    int city;
-    printf("\nEnter the city you want to start your exploration: \n");
-    scanf("%d", &city);
 
     FILE *fptr = fopen("input.txt", "r");
     // if(city==1)
@@ -66,6 +69,7 @@ int main()
     int n;
     // printf("Enter no. of nodes:\n");
     fscanf(fptr, "%d", &n);
+    n=n+1;
     // printf("%d\n",n);
 
     Graph G;
@@ -119,6 +123,22 @@ int main()
 
     else if (x == 1)
     {
+    password:
+
+        printf("\n1. Enter Admin Password:\n2. Exit\n\n");
+        int A;
+        scanf("%d", &A);
+        if(A==2){
+            goto starting;
+        }
+        printf("Enter Password:\n");
+        char s[100];
+        scanf("%s",s);
+
+        if(strcmp(s,"abc123")){
+            printf("Wrong Password\nPlease Try Again\n");
+            goto password;
+        }
 
         printf("\n\n");
 
