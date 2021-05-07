@@ -87,6 +87,42 @@ void Print_Graph(Graph G,int n){
 }
 
 
+void delete_edge(Graph G,vertex v1,vertex v2){
+    pointer p=G->pnext[v1];
+
+    int flag=0;
+    int last=0;
+    pointer prev=(pointer)malloc(sizeof(struct Node));
+    prev=p;
+    while(p->next!=NULL){
+        if(p->elem==v2){
+            flag=1;
+            break;
+        }
+        prev=p;
+        p=p->next;
+    }
+    if(p->elem==v2 && flag==0){
+            flag=1;
+            last=1;
+        }
+    
+    if(flag==0){
+        printf("Edge not present!\n");
+    }
+    else{
+        if(last==1){
+            prev->next=NULL;
+        }
+        else{
+            prev->next=p->next;
+        }
+    }
+
+    return;
+}
+
+
 /*----------- priorityQ functions---------------------------------------------------------*/
 // This is needed for decreaseKey(). keeps track of position of each vertex. so pos[i] gives position of vertex i in PriorityQ_arr
 int *pos; 

@@ -58,6 +58,9 @@ void add_vertex(Graph G,vertex source,vertex dest,double edge_len,int traffic);
 /*----------- search_node for searching a vertex in a graph-------------------------------*/
 int search_node(Graph G,vertex a);
 
+/*----------- delete edge from the graph------------------------------------------------- */
+void delete_edge(Graph G,vertex v1,vertex v2);
+
 /*----------- priorityQ functions---------------------------------------------------------*/
 
 //make new PriorityQNode
