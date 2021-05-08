@@ -17,7 +17,7 @@ starting:
     fflush(0);
 
     printf("/*-----------  <==       ...............   ==>  ------------*/\n");
-    printf("                          Way To Hell                          \n");
+    printf("                         =>. AA=>GPS .<=                        \n");
     printf("\n\n");
 
     printf("                       Navigate & Explore                     \n");
@@ -86,15 +86,22 @@ starting:
 
         // printf("%d  %d  %g  %d\n",v1,v2,el,tr);
 
-        add_vertex(G, v1, v2, el, tr);
+        add_edge(G, v1, v2, el, tr);
     }
 
+ main_menu:
+
+    fflush(0);
+    clrscr();
     printf("\n\n\n");
-    printf("                     Press:                  \n");
-    printf("                    1. Admin                   \n");
-    printf("                    2. User                   \n");
-    printf("                    3. Exit                  \n\n\n");
-    printf("Enter choice:\n");
+    printf("MAIN MENU:\n");
+    printf("\n/*-----------  <==       ...............     ==>  ------------*/\n");
+    printf("                              Press:                  \n");
+    printf("                             1. Admin                   \n");
+    printf("                             2. User                   \n");
+    printf("                             3. Exit                  \n");
+    printf("\n/*-----------  <==       ...............     ==>  ------------*/\n\n\n");
+    printf("Enter choice: ");
     int x;
     scanf("%d", &x);
 
@@ -130,7 +137,7 @@ starting:
         char ch;
         fflush(0);
         scanf("%c",&ch);
-        if(ch == 'Y' || ch == 'y') goto starting;
+        if(ch == 'Y' || ch == 'y') goto main_menu;
         else exit(0);
 
     }
@@ -143,7 +150,9 @@ starting:
     {
     password:
 
-        printf("\n1. Enter Admin Password \n2. Exit\n\n");
+        printf("\n/*-----------  <==       ...............     ==>  ------------*/\n");
+        printf("\n1. Enter Admin Password \n2. Exit\n");
+        printf("\n/*-----------  <==       ...............     ==>  ------------*/\n\n");
         int A;
         scanf("%d", &A);
 
@@ -156,7 +165,7 @@ starting:
             fflush(0);
             printf("Enter any key to continue\n");
             getch();
-            goto starting;
+            goto main_menu;
         }
 
         printf("Enter Password:\n");
@@ -178,11 +187,12 @@ starting:
         printf("                    1. Add Edge                   \n");
         printf("                    2. Remove Edge                   \n");
         printf("                    3. Search Node                  \n");
-        printf("                    4. Print Graph                  \n");
-        printf("                    5. Exit                   \n");
+        printf("                    4. Search Edge                  \n");
+        printf("                    5. Print Graph                  \n");
+        printf("                    6. Exit                   \n");
         printf("/*-----------  <==       ...............     ==>  ------------*/\n");
 
-        printf("Enter choice:\n");
+        printf("Enter choice: ");
         int y;
         scanf("%d", &y);
 
@@ -195,7 +205,7 @@ starting:
             scanf("%d %d %lf %d", &v1, &v2, &el, &traffic);
             printf("\n\n");
 
-            add_vertex(G, v1, v2, el, traffic);
+            add_edge(G, v1, v2, el, traffic);
 
             printf("\n\n\n");
             goto loop;
@@ -233,16 +243,34 @@ starting:
 
         }
 
-        else if (y == 4)
+        else if (y==4)
+        {
+
+            printf("Enter Vertices V1,V2: ");
+            int v1, v2;
+            scanf("%d %d", &v1, &v2);
+
+            printf("\n\n");
+            search_edge(G, v1, v2);
+
+            printf("\n\n\n");
+
+            goto loop;
+        }
+
+        else if (y == 5)
         {
             Print_Graph(G, n);
+            //ViewMapNetwork(G);
+
+
             goto loop;
 
         }
 
-        else if(y == 5)
+        else if(y == 6)
         {
-            goto starting;
+            goto main_menu;
         }
 
         else
