@@ -85,6 +85,6 @@ void decreaseKey(PriorityQPtr PQ,vertex v, double time);
 vertex choose_min(PriorityQPtr PriorityQ,int* visited, Graph G);
 
 /*----------- Dijkstra for finding the shortest paths between nodes in a graph-------------*/
-void Dijkstra(Graph G, vertex source,vertex destination);
+void Dijkstra(Graph G, vertex source,vertex destination,int city);
 
 #endif  //!__GRAPH__H__

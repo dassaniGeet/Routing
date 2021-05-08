@@ -125,7 +125,7 @@ starting:
         printf("\n\n\n");
         printf("/*-----------  <==       ...............   ==>  ------------*/\n");
 
-        Dijkstra(G, source, destination);
+        Dijkstra(G, source, destination,city);
         printf("do you wanna continue?(Y/N)\n");
         char ch;
         fflush(0);

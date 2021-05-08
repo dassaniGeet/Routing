@@ -249,7 +249,7 @@ vertex choose_min(PriorityQPtr PQ,int* visited, Graph G)
 
 /*----------- Dijkstra for finding the shortest paths between nodes in a graph-------------*/
 
-void Dijkstra(Graph G, vertex source, vertex destination)
+void Dijkstra(Graph G, vertex source, vertex destination,int city)
 {
     
     //checks for valid source
@@ -369,7 +369,7 @@ void Dijkstra(Graph G, vertex source, vertex destination)
     int year = local->tm_year;        // get minutes passed after the hour (0-59)
 
 
-  printf("\nCity\n\n");
+  printf("\nCity: %d\n\n",city);
 
   printf("Source: %d\n\n",source);
 
