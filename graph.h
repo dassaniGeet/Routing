@@ -1,8 +1,8 @@
 #ifndef __GRAPH__H__
 #define __GRAPH__H__
 
-#define Max_Nodes 1000
-#define INF 100000
+#define Max_Nodes 5000
+#define INF 10000000
 typedef struct Node* pointer;
 typedef struct Node Node;
 typedef struct graph* Graph;

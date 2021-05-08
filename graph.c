@@ -42,8 +42,8 @@ void add_vertex(Graph G,vertex source,vertex dest,double edge_len,int traffic){
         ptr->time=edge_len/v;
     }
     else{
-        double v=0;
-        ptr->time=INF;
+        double v=5;
+        ptr->time=edge_len/v;
     }
 
 
@@ -213,16 +213,20 @@ void decreaseKey(PriorityQPtr PQ,vertex v, double time)
     PQ->priorityQ_arr[i]->time = time;
 
     //while PriorityQ is not hepified
-    while (PQ->priorityQ_arr[i]->time < PQ->priorityQ_arr[(i - 1) / 2]-> time)
+    while (PQ->priorityQ_arr[i]->time < PQ->priorityQ_arr[(i - 1) / 2]-> time && i!=0)
     {
         // Swap this node with its parent
         int parent_ind = (i-1)/2;
-        pos[PQ->priorityQ_arr[i]->v] = parent_ind;
-        pos[PQ->priorityQ_arr[parent_ind]->v] = i;
+  
 
         swap(&(PQ->priorityQ_arr[i]),&(PQ->priorityQ_arr[parent_ind]));
 
-        parent_ind = (parent_ind - 1) / 2;
+        pos[PQ->priorityQ_arr[i]->v] = parent_ind;
+        pos[PQ->priorityQ_arr[parent_ind]->v] = i;
+
+        i = parent_ind;
+
+        //parent_ind = (parent_ind - 1) / 2;
     }
 }
  
@@ -281,6 +285,12 @@ void Dijkstra(Graph G, vertex source, vertex destination)
         prev[i] = -1;
     }
 
+    for (int i = 0; i < G->num_of_nodes; ++i)
+        {
+          printf("%g , ", PQ->priorityQ_arr[i]->time);
+        }
+          printf("------\n-----");
+
     /*
      source node:
      source_node = visited   visited[source] = 1 , min_distance[source] = 0
@@ -304,7 +314,7 @@ void Dijkstra(Graph G, vertex source, vertex destination)
        p = p->next;
     }
 
-    /*
+  /*
     for(i=1;i<G->num_of_nodes;i++) // i.e till all nodes are visited
     {
     1. choose the minimum vertex
@@ -316,8 +326,24 @@ void Dijkstra(Graph G, vertex source, vertex destination)
 
     for(int i=1;i<G->num_of_nodes;i++)
       {
+        
+        
+        // //min
+
+        // int k = INF;
+        // for (int i = 0; i < G->num_of_nodes; ++i)
+        // {
+        //   if(min_time[i]<k && !visited[i])
+        //       k=i;
+        // }
 
         int k = choose_min(PQ,visited,G);
+        for (int i = 0; i < G->num_of_nodes; ++i)
+        {
+          printf("(%g ,%d)", PQ->priorityQ_arr[i]->time,PQ->priorityQ_arr[i]->v);
+        }
+        printf("\n min: %d\n",k);
+        printf("----\n");
         if(k==-1) continue;
         
         visited[k] = 1;
@@ -343,6 +369,14 @@ void Dijkstra(Graph G, vertex source, vertex destination)
  //print final path:
 //   printf("Source: %d\n", source);
 //   printf("Destination: %d\n", destination);
+
+// debug:
+ printf("%d\n",G->num_of_nodes );
+    for (int i = 0; i < G->num_of_nodes; ++i)
+    {
+        printf("%d : (%g , %g, %d) \n",i, min_distance[i],min_time[i],visited[i]);
+    }
+
 
   double t=min_time[destination];
   int hrs=(int)floor(t);
