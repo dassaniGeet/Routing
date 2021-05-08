@@ -74,15 +74,18 @@ void Print_Graph(Graph G,int n){
         printf("NULL\n");
         return;
     }
+
+    printf("\n \n Graph:\n");
     
     for(int i=0 ; i<G->num_of_nodes ; i++){
         pointer p=G->pnext[i];
         while(p->next!=NULL){
-            printf("%d(Edge len between %d and %d is %g)\t",p->elem,i,p->elem,p->edge_len);
+            printf("%d[Edge len between %d and %d is %g] ===> ",p->elem,i,p->elem,p->edge_len);
 
             p=p->next;
+
         }
-        printf("%d(Edge len between %d and %d is %g)\n",p->elem,i,p->elem,p->edge_len);
+        printf("%d[Edge len between %d and %d is %g]\n\n",p->elem,i,p->elem,p->edge_len);
     }
 }
 
@@ -285,12 +288,6 @@ void Dijkstra(Graph G, vertex source, vertex destination)
         prev[i] = -1;
     }
 
-    for (int i = 0; i < G->num_of_nodes; ++i)
-        {
-          printf("%g , ", PQ->priorityQ_arr[i]->time);
-        }
-          printf("------\n-----");
-
     /*
      source node:
      source_node = visited   visited[source] = 1 , min_distance[source] = 0
@@ -327,23 +324,9 @@ void Dijkstra(Graph G, vertex source, vertex destination)
     for(int i=1;i<G->num_of_nodes;i++)
       {
         
-        
-        // //min
-
-        // int k = INF;
-        // for (int i = 0; i < G->num_of_nodes; ++i)
-        // {
-        //   if(min_time[i]<k && !visited[i])
-        //       k=i;
-        // }
 
         int k = choose_min(PQ,visited,G);
-        for (int i = 0; i < G->num_of_nodes; ++i)
-        {
-          printf("(%g ,%d)", PQ->priorityQ_arr[i]->time,PQ->priorityQ_arr[i]->v);
-        }
-        printf("\n min: %d\n",k);
-        printf("----\n");
+
         if(k==-1) continue;
         
         visited[k] = 1;
@@ -366,16 +349,7 @@ void Dijkstra(Graph G, vertex source, vertex destination)
 
  prev[source] = -1;
 
- //print final path:
-//   printf("Source: %d\n", source);
-//   printf("Destination: %d\n", destination);
 
-// debug:
- printf("%d\n",G->num_of_nodes );
-    for (int i = 0; i < G->num_of_nodes; ++i)
-    {
-        printf("%d : (%g , %g, %d) \n",i, min_distance[i],min_time[i],visited[i]);
-    }
 
 
   double t=min_time[destination];
@@ -411,7 +385,7 @@ void Dijkstra(Graph G, vertex source, vertex destination)
     printf("\n\n\n");
    printf("/*-----------  <==       ...............   ==>  ------------*/\n\n");
 
-  printf("Current Time: %s\n", ctime(&now));
+  printf("Current Time:   %s", ctime(&now));
 
 //   printf("Approximate Arrival Time: %dhrs %dmins\n", hrs,min);
 
@@ -426,7 +400,7 @@ void Dijkstra(Graph G, vertex source, vertex destination)
       hours=hours-24;
   }
 
-  printf("Approximate Arrival Time:: %d:%d\n\n",hours,minutes);
+  printf("Approximate Arrival Time:   %d:%d  \n\n",hours,minutes);
 
   printf("Map Path: \n");
 
@@ -447,4 +421,3 @@ void Dijkstra(Graph G, vertex source, vertex destination)
   printf("%d\n", source);
   return;
 }
-
