@@ -1,17 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <time.h>
 #include <string.h>
 #include "conio.h"
 #include "graph.h"
 
+
 int main()
+
 {
 
+
+starting:
     clrscr();
+    fflush(0);
 
     printf("/*-----------  <==       ...............   ==>  ------------*/\n");
-    printf("                          Way To Hell                          \n");
+    printf("                         =>. AA=>GPS .<=                        \n");
     printf("\n\n");
 
     printf("                       Navigate & Explore                     \n");
@@ -23,28 +29,27 @@ int main()
     printf("\nEnter the city you want to start your exploration: \n");
     scanf("%d", &city);
 
-starting:
 
-    printf("                     Press:                  \n");
-    printf("                    1. Admin                   \n");
-    printf("                    2. User                   \n");
-    int x;
-    scanf("%d", &x);
-
-    if (x != 1 && x != 2)
-    {
-        exit(0);
+    FILE *fptr;
+    if(city==1)
+        fptr=fopen("input.txt","r");
+    else if(city==2)
+        fptr=fopen("input_2.txt","r");
+    else if(city==3)
+        fptr=fopen("input_3.txt","r");
+    else if(city==4)
+        fptr=fopen("input_4.txt","r");
+    else if(city==5)
+        fptr=fopen("input_5.txt","r");
+    else{
+        printf("Invalid city!\n"); 
+        fflush(0); 
+        printf("Press any key to continue!\n");
+        getch();
+        goto starting;
     }
-    clrscr();
-    printf("/*-----------  <==       ...............   ==>  ------------*/\n");
-    printf("                          Way To Hell                          \n");
-    printf("\n\n");
 
-    printf("                       Navigate & Explore                     \n");
-    printf("/*-----------  <==       ...............     ==>  ------------*/\n\n\n");
-
-    printf("WELCOME!\nExplore the World With Us!\n\n\n");
-
+<<<<<<< HEAD
     FILE *fptr = fopen("input_5.txt", "r");
     // if(city==1)
     //     fptr=fopen("input_1.txt","r");
@@ -65,6 +70,12 @@ starting:
     //      printf("Graph not available!\n");
     //      exit(0);
     // }
+=======
+    if (fptr == NULL){
+         printf("Graph not available!\n");
+         exit(0);
+    }
+>>>>>>> 79cceff3463d76e3448425a8e7e800c4f7528cd9
 
     int n;
     // printf("Enter no. of nodes:\n");
@@ -98,8 +109,38 @@ starting:
 
         // printf("%d  %d  %g  %d\n",v1,v2,el,tr);
 
-        add_vertex(G, v1, v2, el, tr);
+        add_edge(G, v1, v2, el, tr);
     }
+
+ main_menu:
+
+    fflush(0);
+    clrscr();
+    printf("\n\n\n");
+    printf("MAIN MENU:\n");
+    printf("\n/*-----------  <==       ...............     ==>  ------------*/\n");
+    printf("                              Press:                  \n");
+    printf("                             1. Admin                   \n");
+    printf("                             2. User                   \n");
+    printf("                             3. Exit                  \n");
+    printf("\n/*-----------  <==       ...............     ==>  ------------*/\n\n\n");
+    printf("Enter choice: ");
+    int x;
+    scanf("%d", &x);
+
+    if (x != 1 && x != 2)
+    {
+        exit(0);
+    }
+    clrscr();
+    printf("/*-----------  <==       ...............   ==>  ------------*/\n");
+    printf("                         =>. AA=>GPS .<=                          \n");
+    printf("\n\n");
+
+    printf("                       Navigate & Explore                     \n");
+    printf("/*-----------  <==       ...............     ==>  ------------*/\n\n\n");
+
+    printf("WELCOME!\nExplore the World With Us!\n\n\n");
 
     /* User Window */
     if (x == 2)
@@ -114,7 +155,14 @@ starting:
         printf("\n\n\n");
         printf("/*-----------  <==       ...............   ==>  ------------*/\n");
 
-        Dijkstra(G, source, destination);
+        Dijkstra(G, source, destination,city);
+        printf("do you wanna continue?(Y/N)\n");
+        char ch;
+        fflush(0);
+        scanf("%c",&ch);
+        if(ch == 'Y' || ch == 'y') goto main_menu;
+        else exit(0);
+
     }
 
     /* End */
@@ -125,12 +173,24 @@ starting:
     {
     password:
 
-        printf("\n1. Enter Admin Password:\n2. Exit\n\n");
+        printf("\n/*-----------  <==       ...............     ==>  ------------*/\n");
+        printf("\n1. Enter Admin Password \n2. Exit\n");
+        printf("\n/*-----------  <==       ...............     ==>  ------------*/\n\n");
         int A;
         scanf("%d", &A);
-        if(A==2){
+
+        if(A == 2){
             goto starting;
         }
+        if(A != 1)
+        {
+            printf("Enter Valid Choice!\n");
+            fflush(0);
+            printf("Enter any key to continue\n");
+            getch();
+            goto main_menu;
+        }
+
         printf("Enter Password:\n");
         char s[100];
         scanf("%s",s);
@@ -139,20 +199,23 @@ starting:
             printf("Wrong Password\nPlease Try Again\n");
             goto password;
         }
-
+        clrscr();
         printf("\n\n");
 
-        Print_Graph(G, n);
+     
 
     loop:
         printf("\n/*-----------  <==       ...............     ==>  ------------*/\n");
         printf("Enter action to performed:\n");
         printf("                    1. Add Edge                   \n");
         printf("                    2. Remove Edge                   \n");
-        printf("                    3. Search Node                   \n");
-        printf("                    4. Exit                   \n");
+        printf("                    3. Search Node                  \n");
+        printf("                    4. Search Edge                  \n");
+        printf("                    5. Print Graph                  \n");
+        printf("                    6. Exit                   \n");
         printf("/*-----------  <==       ...............     ==>  ------------*/\n");
 
+        printf("Enter choice: ");
         int y;
         scanf("%d", &y);
 
@@ -165,11 +228,13 @@ starting:
             scanf("%d %d %lf %d", &v1, &v2, &el, &traffic);
             printf("\n\n");
 
-            add_vertex(G, v1, v2, el, traffic);
+            add_edge(G, v1, v2, el, traffic);
 
             printf("\n\n\n");
-            Print_Graph(G, n);
+            goto loop;
+            //Print_Graph(G, n);
         }
+
         else if (y == 2)
         {
             printf("Enter Vertices V1,V2: ");
@@ -181,8 +246,10 @@ starting:
 
             printf("\n\n\n");
 
-            Print_Graph(G, n);
+             goto loop;
+
         }
+
         else if (y == 3)
         {
             printf("Enter Vertex to be searched:");
@@ -195,11 +262,40 @@ starting:
                 printf("Not Found\n\n");
             else
                 printf("Found\n\n");
+             goto loop;
+
         }
-        else if (y == 4)
+
+        else if (y==4)
         {
-            exit(0);
+
+            printf("Enter Vertices V1,V2: ");
+            int v1, v2;
+            scanf("%d %d", &v1, &v2);
+
+            printf("\n\n");
+            search_edge(G, v1, v2);
+
+            printf("\n\n\n");
+
+            goto loop;
         }
+
+        else if (y == 5)
+        {
+            Print_Graph(G, n);
+            ViewMapNetwork(G);
+
+
+            goto loop;
+
+        }
+
+        else if(y == 6)
+        {
+            goto main_menu;
+        }
+
         else
         {
             printf("Wrong Input!\n\n");
