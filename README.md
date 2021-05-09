@@ -21,6 +21,9 @@ Added to all this we have also kept password protection for the admin window, i.
 git clone https://github.com/dassaniGeet/Routing.git
 ```
 
+Alternatively download the zip folder.
+
+
 # How to Run the Code:
 
 Firstly user has to download and put all of the following files in the same folder otherwise code will not work fine as in code we are calling various files so those all files should be present at the same place. Files are:
