@@ -147,3 +147,19 @@ This file is included only to use one function in the code i.e. the function whi
 There are 5 files of this kind which repreents 5 different graphs of 5 different cities.
 
 From these files, only the code gets the input for making the graph and uses the graph to implement the following functions on it.
+
+- **maps**
+
+This folder contains the visualization  of map of the city 1,2,3,4.
+
+map-1 contains only 10 nodes so it a short and sparse graph.
+
+map-2 contains 46 nodes and its a small, dense graph.
+
+map-3 contains 380 nodes and its a medium, dense graph.
+
+map-4 contains 2952 nodes and its a medium, sparse graph.
+
+- **testcases.cpp**
+
+Its a code for generating random graphs.
