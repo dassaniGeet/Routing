@@ -456,8 +456,8 @@ void Dijkstra(Graph G, vertex source, vertex destination, int city) {
 void writeMapNetwork(Graph g) {
 
     system("clear");
-    FILE *f = fopen("data/graphviz.dot", "w");
-    printf("hie\n");
+    FILE *f = fopen("graphviz.dot", "w");
+    //printf("hie\n");
 // for (int i = 0; i < G->num_of_nodes; i++) {
 //     pointer p = G->pnext[i];
 //     while (p->next != NULL) {
@@ -472,20 +472,21 @@ void writeMapNetwork(Graph g) {
     fprintf(f, "digraph MAPS {\n");
     fprintf(f, "\tnode [fontname=\"Consolas\", shape=oval, style=filled, color=\".7 .3 1.0\"];\n");
 
-      printf("hie\n");
+     // printf("hie\n");
       for (int i = 0; i < g->num_of_nodes; ++i) {
         if (g->pnext[i]) {
             pointer temp = g->pnext[i];
-            printf("hie1\n");
+            //printf("hie1\n");
             fprintf(f, "\t\"%d\" -> ", temp->elem);
             while (temp->next != NULL) {
                 fprintf(f, "\"%d\"", temp->elem);
+                fprintf(f, " -> ");
                 temp = temp->next;
-                if (temp)
-                    fprintf(f, " -> ");
+                    
             }
+            fprintf(f, "\"%d\"", temp->elem);
             fprintf(f, "\n");
-             printf("hie2\n");
+             //printf("hie2\n");
         }
     }
     fprintf(f, "}");
@@ -495,5 +496,5 @@ void writeMapNetwork(Graph g) {
 
 void ViewMapNetwork(Graph g) {
     writeMapNetwork(g);
-    system("dot -Tpng data/graphviz.dot -o data/map-network.png && xdg-open data/map-network.png");
+    system("dot -Tpng graphviz.dot -o map-network.png && xdg-open map-network.png");
 }

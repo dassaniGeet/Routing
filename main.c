@@ -261,7 +261,7 @@ starting:
         else if (y == 5)
         {
             Print_Graph(G, n);
-            //ViewMapNetwork(G);
+            ViewMapNetwork(G);
 
 
             goto loop;
