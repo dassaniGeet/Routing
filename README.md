@@ -9,14 +9,14 @@ The main aim of our project is to give minimum time and distance for given sourc
 
 Either git clone or download the zip folder:
 
-```sh
+```bash
 
 git clone https://github.com/dassaniGeet/Routing.git
 
 ```
 cd into the directory and execute the following commands:
 
-```sh
+```bash
 
  gcc graph.c main.c -o g;./g
  
