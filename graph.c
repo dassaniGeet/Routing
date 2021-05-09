@@ -457,18 +457,7 @@ void writeMapNetwork(Graph g) {
 
     system("clear");
     FILE *f = fopen("graphviz.dot", "w");
-    //printf("hie\n");
-// for (int i = 0; i < G->num_of_nodes; i++) {
-//     pointer p = G->pnext[i];
-//     while (p->next != NULL) {
-//       printf("%d[Edge len between %d and %d is %g] ===> ", p->elem, i, p->elem,
-//              p->edge_len);
 
-//       p = p->next;
-//     }
-//     printf("%d[Edge len between %d and %d is %g]\n\n", p->elem, i, p->elem,
-//            p->edge_len);
-//   }
     fprintf(f, "digraph MAPS {\n");
     fprintf(f, "\tnode [fontname=\"Consolas\", shape=oval, style=filled, color=\".7 .3 1.0\"];\n");
 
