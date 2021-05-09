@@ -54,7 +54,7 @@ Now on the user's terminal, he/she has to compile the code to generate an execut
   gcc graph.c main.c -lm
   ```
 
-When the user will run this command on his/her terminal an executable file will automatically be created in the same folder. Now to run that executable file user has to run the following command on terminal and the program will start working:
+When the user will run this command on his/her terminal an executable file will automatically be created in the same folder. Now to run that executable file user has to run the following command on terminal and the program will start working. The command for running the executable varies depending on the operating system. The command used in Linux is:
 
 ```bash
 ./a.out
