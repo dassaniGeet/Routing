@@ -50,7 +50,7 @@ If the person inputs the wrong password, a message will be printed on the screen
 If the person enters the correct password, then the screen will be cleared and the following option will appear to the user i.e. what task the admin wants to perform:
 
  
-1.Add Edge
+ 1.Add Edge
 
 2. Remove Edge
 
