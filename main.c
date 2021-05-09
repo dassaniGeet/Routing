@@ -45,7 +45,7 @@ starting:
 
     printf("WELCOME!\nExplore the World With Us!\n\n\n");
 
-    FILE *fptr = fopen("input.txt", "r");
+    FILE *fptr = fopen("input_5.txt", "r");
     // if(city==1)
     //     fptr=fopen("input_1.txt","r");
     // else if(city==2)
