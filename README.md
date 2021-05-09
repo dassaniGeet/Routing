@@ -5,6 +5,26 @@ We have implemented **User Friendly Routing Program**.
 
 The main aim of our project is to give minimum time and distance for given source and destination in the graph(source and destination will be entered by the user).
 
+## Installation
+
+Either git clone or download the zip folder:
+
+```bash
+
+git clone https://github.com/dassaniGeet/Routing.git
+
+```
+cd into the directory and execute the following commands:
+
+```bash
+
+ gcc graph.c main.c -o g;./g
+ 
+ ```
+ 
+This will open the UI and the UI is very user friendly and will guide you through the process.
+
+## 
 The code takes the input from the input file. As of now, there are 5 input files in the project which represents the 5 different graphs of 5 different cities. We ask the user the city he/she wants to explore and accordingly to that code selects the input file.
 
 Basically, the project has two profiles, first is the Admin profile in which the admin can access the graph and can edit the graph like to add edge or remove edge or to print graph etc, but the changes admin will do will be temporary, if admin wants to do permanent changes he/she have to do changes in the input file.
