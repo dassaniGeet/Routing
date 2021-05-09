@@ -111,7 +111,7 @@ starting:
     }
     clrscr();
     printf("/*-----------  <==       ...............   ==>  ------------*/\n");
-    printf("                          Way To Hell                          \n");
+    printf("                         =>. AA=>GPS .<=                          \n");
     printf("\n\n");
 
     printf("                       Navigate & Explore                     \n");
