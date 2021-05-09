@@ -47,6 +47,12 @@ Now on the user's terminal, he/she has to compile the code to generate an execut
 ```bash
  gcc graph.c main.c 
  ```
+ 
+ Alternatively, use this command:
+ 
+ ```bash
+  gcc graph.c main.c -lm
+  ```
 
 When the user will run this command on his/her terminal an executable file will automatically be created in the same folder. Now to run that executable file user has to run the following command on terminal and the program will start working:
 
