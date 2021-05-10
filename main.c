@@ -17,11 +17,21 @@ starting:
     fflush(0);
 
     printf("/*-----------  <==       ...............   ==>  ------------*/\n");
-    printf("                         =>. AA=>GPS .<=                        \n");
+                        
+printf("\t \t (      (        )     *        )   (   \n");  
+printf("\t \t )\\ )   )\\ )  ( /(   (  `    ( /(   )\\ ) \n"); 
+printf("\t \t (()/(  (()/(  )\\())  )\\))(   )\\()) (()/( \n"); 
+printf("\t \t /(_))  /(_))((_)\\  ((_)()\\ ((_)\\   /(_)) \n");
+printf("\t \t (_))_  (_))    ((_) (_()((_)  ((_) (_))   \n");
+printf("\t \t  |   \\ | _ \\  / _ \\ |  \\/  | / _ \\ / __|  \n");
+printf("\t \t  | |) ||   / | (_) || |\\/| || (_) |\\__ \\ \n ");
+printf("\t \t  |___/ |_|_\\  \\___/ |_|  |_| \\___/ |___/  \n");
+                                          
+
     printf("\n\n");
 
-    printf("                       Navigate & Explore                     \n");
-    printf("/*-----------  <==       ...............     ==>  ------------*/\n\n\n");
+    printf("                          Navigate & Explore                     \n");
+    printf("/*-----------  <==          ...............     ==>  ------------*/\n\n\n");
 
     printf("WELCOME!\nExplore the World With Us!\n\n\n");
 
@@ -49,8 +59,7 @@ starting:
         goto starting;
     }
 
-<<<<<<< HEAD
-    FILE *fptr = fopen("input_5.txt", "r");
+    //FILE *fptr = fopen("input_5.txt", "r");
     // if(city==1)
     //     fptr=fopen("input_1.txt","r");
     // else if(city==2)
@@ -70,12 +79,12 @@ starting:
     //      printf("Graph not available!\n");
     //      exit(0);
     // }
-=======
+
     if (fptr == NULL){
          printf("Graph not available!\n");
          exit(0);
     }
->>>>>>> 79cceff3463d76e3448425a8e7e800c4f7528cd9
+
 
     int n;
     // printf("Enter no. of nodes:\n");
@@ -134,11 +143,21 @@ starting:
     }
     clrscr();
     printf("/*-----------  <==       ...............   ==>  ------------*/\n");
-    printf("                         =>. AA=>GPS .<=                          \n");
+                        
+printf("\t \t (      (        )     *        )   (   \n");  
+printf("\t \t )\\ )   )\\ )  ( /(   (  `    ( /(   )\\ ) \n"); 
+printf("\t \t (()/(  (()/(  )\\())  )\\))(   )\\()) (()/( \n"); 
+printf("\t \t /(_))  /(_))((_)\\  ((_)()\\ ((_)\\   /(_)) \n");
+printf("\t \t (_))_  (_))    ((_) (_()((_)  ((_) (_))   \n");
+printf("\t \t  |   \\ | _ \\  / _ \\ |  \\/  | / _ \\ / __|  \n");
+printf("\t \t  | |) ||   / | (_) || |\\/| || (_) |\\__ \\ \n ");
+printf("\t \t  |___/ |_|_\\  \\___/ |_|  |_| \\___/ |___/  \n");
+                                          
+
     printf("\n\n");
 
-    printf("                       Navigate & Explore                     \n");
-    printf("/*-----------  <==       ...............     ==>  ------------*/\n\n\n");
+    printf("                          Navigate & Explore                     \n");
+    printf("/*-----------  <==          ...............     ==>  ------------*/\n\n\n");
 
     printf("WELCOME!\nExplore the World With Us!\n\n\n");
 
@@ -284,7 +303,7 @@ starting:
         else if (y == 5)
         {
             Print_Graph(G, n);
-            ViewMapNetwork(G);
+            //ViewMapNetwork(G);
 
 
             goto loop;
